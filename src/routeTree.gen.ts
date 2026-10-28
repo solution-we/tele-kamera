@@ -10,33 +10,44 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicDownloadPlatformReleaseIdRouteImport } from './routes/api/public/download.$platform.$releaseId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicDownloadPlatformReleaseIdRoute =
+  ApiPublicDownloadPlatformReleaseIdRouteImport.update({
+    id: '/api/public/download/$platform/$releaseId',
+    path: '/api/public/download/$platform/$releaseId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/public/download/$platform/$releaseId': typeof ApiPublicDownloadPlatformReleaseIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/public/download/$platform/$releaseId': typeof ApiPublicDownloadPlatformReleaseIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/public/download/$platform/$releaseId': typeof ApiPublicDownloadPlatformReleaseIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/api/public/download/$platform/$releaseId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/api/public/download/$platform/$releaseId'
+  id: '__root__' | '/' | '/api/public/download/$platform/$releaseId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiPublicDownloadPlatformReleaseIdRoute: typeof ApiPublicDownloadPlatformReleaseIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +59,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/download/$platform/$releaseId': {
+      id: '/api/public/download/$platform/$releaseId'
+      path: '/api/public/download/$platform/$releaseId'
+      fullPath: '/api/public/download/$platform/$releaseId'
+      preLoaderRoute: typeof ApiPublicDownloadPlatformReleaseIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiPublicDownloadPlatformReleaseIdRoute:
+    ApiPublicDownloadPlatformReleaseIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
