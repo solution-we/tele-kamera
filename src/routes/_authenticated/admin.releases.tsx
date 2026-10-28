@@ -42,11 +42,9 @@ function ReleasesPage() {
   }
 
   async function act(releaseId: string, action: "publish" | "unpublish" | "archive") {
-    const fn = useServerFnCache(setReleaseStatus);
-    await fn({ data: { releaseId, action } });
+    await setReleaseStatus({ data: { releaseId, action } });
     refresh();
   }
-  function useServerFnCache<T>(f: T): T { return f; }
 
   const rows = releases.data ?? [];
 
