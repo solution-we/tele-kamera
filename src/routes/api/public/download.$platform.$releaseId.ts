@@ -48,7 +48,7 @@ export const Route = createFileRoute("/api/public/download/$platform/$releaseId"
         const supabase = getPublicSupabase();
         const { data: release, error } = await supabase
           .from("releases")
-          .select("id, original_filename, file_size, sha256, content_type")
+          .select("id, storage_key, original_filename, file_size, sha256, content_type")
           .eq("id", parsed.data.releaseId)
           .eq("platform", parsed.data.platform)
           .eq("status", "published")
@@ -64,17 +64,16 @@ export const Route = createFileRoute("/api/public/download/$platform/$releaseId"
         }
         const headers: Record<string, string> = { apikey: serviceKey };
         if (serviceKey.split(".").length === 3) headers["Authorization"] = `Bearer ${serviceKey}`;
-        const ext = release.original_filename.slice(release.original_filename.lastIndexOf(".")).toLowerCase();
         const upstream = await fetch(
-          `${storageBase}/storage/v1/object/releases/${release.id}/${release.original_filename.split("/").map(encodeURIComponent).join("/")}`,
+          `${storageBase}/storage/v1/object/releases/${(release.storage_key as string).split("/").map(encodeURIComponent).join("/")}`,
           { headers },
         );
-        void ext;
         if (!upstream.ok || !upstream.body) {
           return Response.json({ error: "Not found" }, { status: 404 });
         }
 
         const filename = release.original_filename.replace(/[^\w.\-+ ]+/g, "_");
+        const ext = release.original_filename.slice(release.original_filename.lastIndexOf(".")).toLowerCase();
         const contentType = release.content_type ?? mimeByExtension[ext] ?? "application/octet-stream";
         return new Response(upstream.body, {
           status: 200,
