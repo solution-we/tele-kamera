@@ -14,16 +14,179 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      admin_audit_log: {
+        Row: {
+          action: string
+          actor: string | null
+          created_at: string
+          details: Json
+          id: string
+          target: string | null
+        }
+        Insert: {
+          action: string
+          actor?: string | null
+          created_at?: string
+          details?: Json
+          id?: string
+          target?: string | null
+        }
+        Update: {
+          action?: string
+          actor?: string | null
+          created_at?: string
+          details?: Json
+          id?: string
+          target?: string | null
+        }
+        Relationships: []
+      }
+      admin_security: {
+        Row: {
+          must_change_password: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          must_change_password?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          must_change_password?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      bootstrap_state: {
+        Row: {
+          admin_user_id: string | null
+          completed_at: string | null
+          id: boolean
+        }
+        Insert: {
+          admin_user_id?: string | null
+          completed_at?: string | null
+          id?: boolean
+        }
+        Update: {
+          admin_user_id?: string | null
+          completed_at?: string | null
+          id?: boolean
+        }
+        Relationships: []
+      }
+      releases: {
+        Row: {
+          build_number: string | null
+          channel: string
+          content_type: string | null
+          created_at: string
+          created_by: string | null
+          file_size: number | null
+          id: string
+          min_os_version: string | null
+          original_filename: string
+          platform: string
+          published_at: string | null
+          release_notes: string
+          released_at: string | null
+          replaced_from: string | null
+          sha256: string | null
+          status: string
+          storage_key: string
+          updated_at: string
+          version: string
+        }
+        Insert: {
+          build_number?: string | null
+          channel?: string
+          content_type?: string | null
+          created_at?: string
+          created_by?: string | null
+          file_size?: number | null
+          id?: string
+          min_os_version?: string | null
+          original_filename: string
+          platform: string
+          published_at?: string | null
+          release_notes?: string
+          released_at?: string | null
+          replaced_from?: string | null
+          sha256?: string | null
+          status?: string
+          storage_key: string
+          updated_at?: string
+          version: string
+        }
+        Update: {
+          build_number?: string | null
+          channel?: string
+          content_type?: string | null
+          created_at?: string
+          created_by?: string | null
+          file_size?: number | null
+          id?: string
+          min_os_version?: string | null
+          original_filename?: string
+          platform?: string
+          published_at?: string | null
+          release_notes?: string
+          released_at?: string | null
+          replaced_from?: string | null
+          sha256?: string | null
+          status?: string
+          storage_key?: string
+          updated_at?: string
+          version?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "releases_replaced_from_fkey"
+            columns: ["replaced_from"]
+            isOneToOne: false
+            referencedRelation: "releases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +313,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin"],
+    },
   },
 } as const
