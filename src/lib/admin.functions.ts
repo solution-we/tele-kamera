@@ -15,7 +15,7 @@ import {
   extensionAllowed,
   filenameSchema,
   isoDateSchema,
-  maxReleaseBytes,
+  MAX_RELEASE_BYTES as maxReleaseBytes,
   minOsVersionSchema,
   mimeByExtension,
   notesSchema,
@@ -583,7 +583,3 @@ export const runBootstrap = createServerFn({ method: "POST" }).handler(async ():
 
   return { ok: true };
 });
-
-// ---- Public release file stats helper for admin UI (size formatting) ----
-export const _sha256Label = "Server-computed SHA-256";
-export const _hash_UNUSED_guard = createHash;
