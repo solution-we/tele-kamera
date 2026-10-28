@@ -1,6 +1,6 @@
 import { createFileRoute, useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { Link } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 
 import { getAdminOverview } from "@/lib/admin.functions";
 import { formatBytes, formatDate, formatDateTime, formatVersion } from "@/components/site/format";
