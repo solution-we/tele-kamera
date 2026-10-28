@@ -31,7 +31,7 @@ export const listPublicReleases = createServerFn({ method: "GET" }).handler(asyn
   const { data, error } = await supabase
     .from("releases")
     .select(publicColumns)
-    .order("released_at", { ascending: false, nullsLast: true })
+    .order("released_at", { ascending: false })
     .order("created_at", { ascending: false })
     .limit(200);
   if (error) throw new Error("Could not load releases");
@@ -49,7 +49,7 @@ export const getLatestStableReleases = createServerFn({ method: "GET" }).handler
     const { data, error } = await supabase
       .from("releases")
       .select(publicColumns)
-      .order("released_at", { ascending: false, nullsLast: true })
+      .order("released_at", { ascending: false })
       .order("created_at", { ascending: false })
       .limit(200);
     if (error) throw new Error("Could not load releases");

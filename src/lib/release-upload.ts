@@ -33,13 +33,13 @@ export async function uploadReleaseFile(options: {
   const { file, userId, accessToken, onProgress } = options;
   const path = `uploads/${userId}/${crypto.randomUUID()}/${file.name}`;
   const encodedPath = path.split("/").map(encodeURIComponent).join("/");
-  const url = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/releases/${encodedPath}`;
+  const url = `${import.meta.env["VITE_SUPABASE_URL"] as string}/storage/v1/object/releases/${encodedPath}`;
 
   return new Promise<UploadResult>((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url);
     xhr.setRequestHeader("Authorization", `Bearer ${accessToken}`);
-    xhr.setRequestHeader("apikey", import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string);
+    xhr.setRequestHeader("apikey", import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"] as string);
     xhr.setRequestHeader("x-upsert", "false");
     xhr.setRequestHeader("content-type", file.type || "application/octet-stream");
     xhr.upload.onprogress = (event) => {

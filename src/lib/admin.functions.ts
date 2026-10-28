@@ -7,7 +7,7 @@ import { z } from "zod";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import type { Database } from "@/integrations/supabase/types";
+import type { Database, Json } from "@/integrations/supabase/types";
 import {
   buildNumberSchema,
   channelSchema,
@@ -52,7 +52,7 @@ async function audit(
     actor: context.userId,
     action,
     target,
-    details,
+    details: details as unknown as Json,
   });
 }
 
@@ -456,7 +456,8 @@ export const setReleaseStatus = createServerFn({ method: "POST" })
       .maybeSingle();
     if (!release) return fail("Release not found");
 
-    const patch: Record<string, unknown> = {};
+    type ReleasePatch = Partial<Database["public"]["Tables"]["releases"]["Update"]>;
+    const patch: ReleasePatch = {};
     if (data.action === "publish") {
       if (release.status === "published") return fail("Release is already published");
       patch.status = "published";
