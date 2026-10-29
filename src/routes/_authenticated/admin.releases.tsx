@@ -269,9 +269,20 @@ function NewReleaseDialog({ onClose }: { onClose: () => void }) {
             id="file"
             type="file"
             accept={platform === "android" ? ".apk" : ".exe,.msi"}
-            onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+            onChange={onFileChange}
             className="block w-full text-sm text-muted-foreground file:mr-3 file:rounded-lg file:border-0 file:bg-secondary file:px-3 file:py-2 file:text-sm file:font-medium file:text-foreground"
           />
+          {platform === "android" && file && (
+            detecting ? (
+              <p className="mt-1 text-xs text-muted-foreground">Reading version from the APK…</p>
+            ) : detected ? (
+              <p className="mt-1 text-xs text-success" role="status">
+                Detected from APK: {detected} — you can still edit it before saving.
+              </p>
+            ) : (
+              <p className="mt-1 text-xs text-muted-foreground">Couldn't read the version from this file — enter it manually.</p>
+            )
+          )}
         </div>
         {progress !== null && (
           <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
