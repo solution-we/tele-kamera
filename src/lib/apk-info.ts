@@ -24,7 +24,9 @@ export async function readApkVersion(input: File | Blob | string): Promise<ApkVe
 
     const versionCode =
       info.versionCode === null || info.versionCode === undefined ? undefined : String(info.versionCode);
-    return { versionName, versionCode };
+    return versionCode === undefined
+      ? { versionName }
+      : { versionName, versionCode };
   } catch {
     return null;
   }
