@@ -62,7 +62,9 @@ export function compareVersions(a: string, b: string): number {
       return isNumA ? 1 : -1; // numeric segments outrank textual ones
     }
   }
-  return 0;
+  // Numerically equal (e.g. "2.0" vs "2.0.0"): the version with more
+  // segments sorts later, so latest-version selection prefers it.
+  return pa.length - pb.length;
 }
 
 /** Only published releases may ever appear in public listings. */

@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { useState } from "react";
+import { useRef, useState } from "react";
+
+import { readApkVersion } from "@/lib/apk-info";
 
 import {
   deleteRelease,
@@ -157,6 +159,26 @@ function NewReleaseDialog({ onClose }: { onClose: () => void }) {
   const [progress, setProgress] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [detecting, setDetecting] = useState(false);
+  const [detected, setDetected] = useState<string | null>(null);
+  const detectToken = useRef(0);
+
+  async function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const picked = e.target.files?.[0] ?? null;
+    setFile(picked);
+    setDetected(null);
+    if (!picked || platform !== "android") return;
+    const token = ++detectToken.current;
+    setDetecting(true);
+    const info = await readApkVersion(picked);
+    if (token !== detectToken.current) return;
+    setDetecting(false);
+    if (info) {
+      setVersion(info.versionName);
+      if (info.versionCode) setBuildNumber(info.versionCode);
+      setDetected(info.versionCode ? `${info.versionName} (build ${info.versionCode})` : info.versionName);
+    }
+  }
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -247,9 +269,20 @@ function NewReleaseDialog({ onClose }: { onClose: () => void }) {
             id="file"
             type="file"
             accept={platform === "android" ? ".apk" : ".exe,.msi"}
-            onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+            onChange={onFileChange}
             className="block w-full text-sm text-muted-foreground file:mr-3 file:rounded-lg file:border-0 file:bg-secondary file:px-3 file:py-2 file:text-sm file:font-medium file:text-foreground"
           />
+          {platform === "android" && file && (
+            detecting ? (
+              <p className="mt-1 text-xs text-muted-foreground">Reading version from the APK…</p>
+            ) : detected ? (
+              <p className="mt-1 text-xs text-success" role="status">
+                Detected from APK: {detected} — you can still edit it before saving.
+              </p>
+            ) : (
+              <p className="mt-1 text-xs text-muted-foreground">Couldn't read the version from this file — enter it manually.</p>
+            )
+          )}
         </div>
         {progress !== null && (
           <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
