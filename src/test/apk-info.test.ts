@@ -21,7 +21,7 @@ async function writeTestApk(manifestBytes: Uint8Array): Promise<string> {
 
 describe("APK version detection", () => {
   it("reads versionName and versionCode from an APK manifest", async () => {
-    const apkPath = writeTestApk(manifestFixture());
+    const apkPath = await writeTestApk(manifestFixture());
     try {
       const info = await readApkVersion(apkPath);
       expect(info).not.toBeNull();
@@ -44,7 +44,7 @@ describe("APK version detection", () => {
   });
 
   it("produces a version the release form accepts", async () => {
-    const apkPath = writeTestApk(manifestFixture());
+    const apkPath = await writeTestApk(manifestFixture());
     try {
       const info = await readApkVersion(apkPath);
       expect(versionSchema.safeParse(info?.versionName ?? "").success).toBe(true);
