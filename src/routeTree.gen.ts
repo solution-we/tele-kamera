@@ -12,9 +12,13 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as DownloadsRouteImport } from './routes/downloads'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as DownloadAndroidRouteImport } from './routes/download.android'
+import { Route as DownloadWindowsRouteImport } from './routes/download.windows'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
+import { Route as AuthenticatedAdminReleasesRouteImport } from './routes/_authenticated/admin.releases'
 import { Route as ApiPublicDownloadPlatformReleaseIdRouteImport } from './routes/api/public/download.$platform.$releaseId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -31,10 +35,25 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DownloadsRoute = DownloadsRouteImport.update({
+  id: '/downloads',
+  path: '/downloads',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const DownloadAndroidRoute = DownloadAndroidRouteImport.update({
+  id: '/download/android',
+  path: '/download/android',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DownloadWindowsRoute = DownloadWindowsRouteImport.update({
+  id: '/download/windows',
+  path: '/download/windows',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/',
@@ -46,6 +65,12 @@ const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
   path: '/audit',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminReleasesRoute =
+  AuthenticatedAdminReleasesRouteImport.update({
+    id: '/releases',
+    path: '/releases',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const ApiPublicDownloadPlatformReleaseIdRoute =
   ApiPublicDownloadPlatformReleaseIdRouteImport.update({
     id: '/api/public/download/$platform/$releaseId',
@@ -56,15 +81,23 @@ const ApiPublicDownloadPlatformReleaseIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/downloads': typeof DownloadsRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/download/android': typeof DownloadAndroidRoute
+  '/download/windows': typeof DownloadWindowsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/releases': typeof AuthenticatedAdminReleasesRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/download/$platform/$releaseId': typeof ApiPublicDownloadPlatformReleaseIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/downloads': typeof DownloadsRoute
+  '/download/android': typeof DownloadAndroidRoute
+  '/download/windows': typeof DownloadWindowsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/releases': typeof AuthenticatedAdminReleasesRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/api/public/download/$platform/$releaseId': typeof ApiPublicDownloadPlatformReleaseIdRoute
 }
@@ -73,8 +106,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/downloads': typeof DownloadsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/download/android': typeof DownloadAndroidRoute
+  '/download/windows': typeof DownloadWindowsRoute
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/_authenticated/admin/releases': typeof AuthenticatedAdminReleasesRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/download/$platform/$releaseId': typeof ApiPublicDownloadPlatformReleaseIdRoute
 }
@@ -83,15 +120,23 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/downloads'
     | '/admin'
+    | '/download/android'
+    | '/download/windows'
     | '/admin/audit'
+    | '/admin/releases'
     | '/admin/'
     | '/api/public/download/$platform/$releaseId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/downloads'
+    | '/download/android'
+    | '/download/windows'
     | '/admin/audit'
+    | '/admin/releases'
     | '/admin'
     | '/api/public/download/$platform/$releaseId'
   id:
@@ -99,8 +144,12 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/downloads'
     | '/_authenticated/admin'
+    | '/download/android'
+    | '/download/windows'
     | '/_authenticated/admin/audit'
+    | '/_authenticated/admin/releases'
     | '/_authenticated/admin/'
     | '/api/public/download/$platform/$releaseId'
   fileRoutesById: FileRoutesById
@@ -109,6 +158,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  DownloadsRoute: typeof DownloadsRoute
+  DownloadAndroidRoute: typeof DownloadAndroidRoute
+  DownloadWindowsRoute: typeof DownloadWindowsRoute
   ApiPublicDownloadPlatformReleaseIdRoute: typeof ApiPublicDownloadPlatformReleaseIdRoute
 }
 
@@ -135,12 +187,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/downloads': {
+      id: '/downloads'
+      path: '/downloads'
+      fullPath: '/downloads'
+      preLoaderRoute: typeof DownloadsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/download/android': {
+      id: '/download/android'
+      path: '/download/android'
+      fullPath: '/download/android'
+      preLoaderRoute: typeof DownloadAndroidRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/download/windows': {
+      id: '/download/windows'
+      path: '/download/windows'
+      fullPath: '/download/windows'
+      preLoaderRoute: typeof DownloadWindowsRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
@@ -156,6 +229,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAuditRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/releases': {
+      id: '/_authenticated/admin/releases'
+      path: '/releases'
+      fullPath: '/admin/releases'
+      preLoaderRoute: typeof AuthenticatedAdminReleasesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/api/public/download/$platform/$releaseId': {
       id: '/api/public/download/$platform/$releaseId'
       path: '/api/public/download/$platform/$releaseId'
@@ -168,11 +248,13 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
+  AuthenticatedAdminReleasesRoute: typeof AuthenticatedAdminReleasesRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
+  AuthenticatedAdminReleasesRoute: AuthenticatedAdminReleasesRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
@@ -194,6 +276,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  DownloadsRoute: DownloadsRoute,
+  DownloadAndroidRoute: DownloadAndroidRoute,
+  DownloadWindowsRoute: DownloadWindowsRoute,
   ApiPublicDownloadPlatformReleaseIdRoute:
     ApiPublicDownloadPlatformReleaseIdRoute,
 }
