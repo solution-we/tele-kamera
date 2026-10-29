@@ -12,9 +12,19 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as DownloadsRouteImport } from './routes/downloads'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as FeaturesRouteImport } from './routes/features'
+import { Route as HowToUseRouteImport } from './routes/how-to-use'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ScreenshotsRouteImport } from './routes/screenshots'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as DownloadAndroidRouteImport } from './routes/download.android'
+import { Route as DownloadWindowsRouteImport } from './routes/download.windows'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
+import { Route as AuthenticatedAdminReleasesRouteImport } from './routes/_authenticated/admin.releases'
 import { Route as ApiPublicDownloadPlatformReleaseIdRouteImport } from './routes/api/public/download.$platform.$releaseId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -31,10 +41,55 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DownloadsRoute = DownloadsRouteImport.update({
+  id: '/downloads',
+  path: '/downloads',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesRoute = FeaturesRouteImport.update({
+  id: '/features',
+  path: '/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowToUseRoute = HowToUseRouteImport.update({
+  id: '/how-to-use',
+  path: '/how-to-use',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScreenshotsRoute = ScreenshotsRouteImport.update({
+  id: '/screenshots',
+  path: '/screenshots',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const DownloadAndroidRoute = DownloadAndroidRouteImport.update({
+  id: '/download/android',
+  path: '/download/android',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DownloadWindowsRoute = DownloadWindowsRouteImport.update({
+  id: '/download/windows',
+  path: '/download/windows',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/',
@@ -46,6 +101,12 @@ const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
   path: '/audit',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminReleasesRoute =
+  AuthenticatedAdminReleasesRouteImport.update({
+    id: '/releases',
+    path: '/releases',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const ApiPublicDownloadPlatformReleaseIdRoute =
   ApiPublicDownloadPlatformReleaseIdRouteImport.update({
     id: '/api/public/download/$platform/$releaseId',
@@ -56,15 +117,35 @@ const ApiPublicDownloadPlatformReleaseIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/downloads': typeof DownloadsRoute
+  '/faq': typeof FaqRoute
+  '/features': typeof FeaturesRoute
+  '/how-to-use': typeof HowToUseRoute
+  '/privacy': typeof PrivacyRoute
+  '/screenshots': typeof ScreenshotsRoute
+  '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/download/android': typeof DownloadAndroidRoute
+  '/download/windows': typeof DownloadWindowsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/releases': typeof AuthenticatedAdminReleasesRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/download/$platform/$releaseId': typeof ApiPublicDownloadPlatformReleaseIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/downloads': typeof DownloadsRoute
+  '/faq': typeof FaqRoute
+  '/features': typeof FeaturesRoute
+  '/how-to-use': typeof HowToUseRoute
+  '/privacy': typeof PrivacyRoute
+  '/screenshots': typeof ScreenshotsRoute
+  '/terms': typeof TermsRoute
+  '/download/android': typeof DownloadAndroidRoute
+  '/download/windows': typeof DownloadWindowsRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/releases': typeof AuthenticatedAdminReleasesRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/api/public/download/$platform/$releaseId': typeof ApiPublicDownloadPlatformReleaseIdRoute
 }
@@ -73,8 +154,18 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/downloads': typeof DownloadsRoute
+  '/faq': typeof FaqRoute
+  '/features': typeof FeaturesRoute
+  '/how-to-use': typeof HowToUseRoute
+  '/privacy': typeof PrivacyRoute
+  '/screenshots': typeof ScreenshotsRoute
+  '/terms': typeof TermsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/download/android': typeof DownloadAndroidRoute
+  '/download/windows': typeof DownloadWindowsRoute
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/_authenticated/admin/releases': typeof AuthenticatedAdminReleasesRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/download/$platform/$releaseId': typeof ApiPublicDownloadPlatformReleaseIdRoute
 }
@@ -83,15 +174,35 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/downloads'
+    | '/faq'
+    | '/features'
+    | '/how-to-use'
+    | '/privacy'
+    | '/screenshots'
+    | '/terms'
     | '/admin'
+    | '/download/android'
+    | '/download/windows'
     | '/admin/audit'
+    | '/admin/releases'
     | '/admin/'
     | '/api/public/download/$platform/$releaseId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/downloads'
+    | '/faq'
+    | '/features'
+    | '/how-to-use'
+    | '/privacy'
+    | '/screenshots'
+    | '/terms'
+    | '/download/android'
+    | '/download/windows'
     | '/admin/audit'
+    | '/admin/releases'
     | '/admin'
     | '/api/public/download/$platform/$releaseId'
   id:
@@ -99,8 +210,18 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/downloads'
+    | '/faq'
+    | '/features'
+    | '/how-to-use'
+    | '/privacy'
+    | '/screenshots'
+    | '/terms'
     | '/_authenticated/admin'
+    | '/download/android'
+    | '/download/windows'
     | '/_authenticated/admin/audit'
+    | '/_authenticated/admin/releases'
     | '/_authenticated/admin/'
     | '/api/public/download/$platform/$releaseId'
   fileRoutesById: FileRoutesById
@@ -109,6 +230,15 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  DownloadsRoute: typeof DownloadsRoute
+  FaqRoute: typeof FaqRoute
+  FeaturesRoute: typeof FeaturesRoute
+  HowToUseRoute: typeof HowToUseRoute
+  PrivacyRoute: typeof PrivacyRoute
+  ScreenshotsRoute: typeof ScreenshotsRoute
+  TermsRoute: typeof TermsRoute
+  DownloadAndroidRoute: typeof DownloadAndroidRoute
+  DownloadWindowsRoute: typeof DownloadWindowsRoute
   ApiPublicDownloadPlatformReleaseIdRoute: typeof ApiPublicDownloadPlatformReleaseIdRoute
 }
 
@@ -135,12 +265,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/downloads': {
+      id: '/downloads'
+      path: '/downloads'
+      fullPath: '/downloads'
+      preLoaderRoute: typeof DownloadsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features': {
+      id: '/features'
+      path: '/features'
+      fullPath: '/features'
+      preLoaderRoute: typeof FeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-to-use': {
+      id: '/how-to-use'
+      path: '/how-to-use'
+      fullPath: '/how-to-use'
+      preLoaderRoute: typeof HowToUseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/screenshots': {
+      id: '/screenshots'
+      path: '/screenshots'
+      fullPath: '/screenshots'
+      preLoaderRoute: typeof ScreenshotsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/download/android': {
+      id: '/download/android'
+      path: '/download/android'
+      fullPath: '/download/android'
+      preLoaderRoute: typeof DownloadAndroidRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/download/windows': {
+      id: '/download/windows'
+      path: '/download/windows'
+      fullPath: '/download/windows'
+      preLoaderRoute: typeof DownloadWindowsRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
@@ -156,6 +349,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAuditRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/releases': {
+      id: '/_authenticated/admin/releases'
+      path: '/releases'
+      fullPath: '/admin/releases'
+      preLoaderRoute: typeof AuthenticatedAdminReleasesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/api/public/download/$platform/$releaseId': {
       id: '/api/public/download/$platform/$releaseId'
       path: '/api/public/download/$platform/$releaseId'
@@ -168,11 +368,13 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
+  AuthenticatedAdminReleasesRoute: typeof AuthenticatedAdminReleasesRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
+  AuthenticatedAdminReleasesRoute: AuthenticatedAdminReleasesRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
@@ -194,6 +396,15 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  DownloadsRoute: DownloadsRoute,
+  FaqRoute: FaqRoute,
+  FeaturesRoute: FeaturesRoute,
+  HowToUseRoute: HowToUseRoute,
+  PrivacyRoute: PrivacyRoute,
+  ScreenshotsRoute: ScreenshotsRoute,
+  TermsRoute: TermsRoute,
+  DownloadAndroidRoute: DownloadAndroidRoute,
+  DownloadWindowsRoute: DownloadWindowsRoute,
   ApiPublicDownloadPlatformReleaseIdRoute:
     ApiPublicDownloadPlatformReleaseIdRoute,
 }
