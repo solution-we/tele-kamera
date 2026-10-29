@@ -192,7 +192,7 @@ function DisabledButton({ platform }: { platform: string }) {
   );
 }
 
-function VersionCard({ label, title, sub, href }: { label: string; title: string; sub: string; href?: string }) {
+function VersionCard({ label, title, sub, href }: { label: string; title: string; sub: string; href?: string | undefined }) {
   return (
     <div className="glass rounded-2xl p-5">
       <div className="flex items-center justify-between gap-3">
