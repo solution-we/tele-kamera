@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { useState } from "react";
+import { useRef, useState } from "react";
+
+import { readApkVersion } from "@/lib/apk-info";
 
 import {
   deleteRelease,
@@ -157,6 +159,26 @@ function NewReleaseDialog({ onClose }: { onClose: () => void }) {
   const [progress, setProgress] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [detecting, setDetecting] = useState(false);
+  const [detected, setDetected] = useState<string | null>(null);
+  const detectToken = useRef(0);
+
+  async function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const picked = e.target.files?.[0] ?? null;
+    setFile(picked);
+    setDetected(null);
+    if (!picked || platform !== "android") return;
+    const token = ++detectToken.current;
+    setDetecting(true);
+    const info = await readApkVersion(picked);
+    if (token !== detectToken.current) return;
+    setDetecting(false);
+    if (info) {
+      setVersion(info.versionName);
+      if (info.versionCode) setBuildNumber(info.versionCode);
+      setDetected(info.versionCode ? `${info.versionName} (build ${info.versionCode})` : info.versionName);
+    }
+  }
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
