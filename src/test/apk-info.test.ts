@@ -9,13 +9,13 @@ import { versionSchema } from "@/lib/release-validation";
 
 const manifestFixture = () => readFileSync(join(__dirname, "fixtures/android-manifest.xml.bin"));
 
-function writeTestApk(manifestBytes: Uint8Array): string {
+async function writeTestApk(manifestBytes: Uint8Array): Promise<string> {
   const zip = new JSZip();
   zip.file("AndroidManifest.xml", manifestBytes);
   zip.file("META-INF/MANIFEST.MF", "Manifest-Version: 1.0\n");
   const dir = mkdtempSync(join(tmpdir(), "apk-test-"));
   const apkPath = join(dir, "test-app.apk");
-  writeFileSync(apkPath, zip.generateNodeBuffer());
+  writeFileSync(apkPath, await zip.generateAsync({ type: "nodebuffer" }));
   return apkPath;
 }
 
