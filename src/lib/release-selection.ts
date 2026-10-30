@@ -35,6 +35,16 @@ export function pickLatest<T extends ReleaseSummary>(
   return candidates.sort(compareReleases)[0] ?? null;
 }
 
+/**
+ * The latest published release for one platform, whatever its channel
+ * (Stable, Beta or Pre-release). The public pages surface this, so a
+ * freshly uploaded and published build is never hidden just because it
+ * was tagged as a beta.
+ */
+export function pickLatestPublished<T extends ReleaseSummary>(releases: T[]): T | null {
+  return releases.filter((r) => r.status === "published").sort(compareReleases)[0] ?? null;
+}
+
 export function compareReleases(a: ReleaseSummary, b: ReleaseSummary): number {
   const at = a.released_at ?? a.created_at;
   const bt = b.released_at ?? b.created_at;

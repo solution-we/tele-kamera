@@ -60,14 +60,15 @@ export function uploadKeySchema(userId: string) {
 }
 
 export const allowedExtensions: Record<ReleasePlatform, string[]> = {
-  android: [".apk"],
-  windows: [".exe", ".msi"],
+  android: [".apk", ".zip"],
+  windows: [".exe", ".msi", ".zip"],
 };
 
 export const mimeByExtension: Record<string, string> = {
   ".apk": "application/vnd.android.package-archive",
   ".exe": "application/vnd.microsoft.portable-executable",
   ".msi": "application/x-msi",
+  ".zip": "application/zip",
 };
 
 export function fileExtension(filename: string): string {
@@ -92,14 +93,16 @@ export const MAX_RELEASE_BYTES = 1024 ** 3;
  */
 export function checkMagicBytes(platform: ReleasePlatform, filename: string, head: Uint8Array): boolean {
   if (head.length < 4) return false;
-  if (platform === "android") {
-    if (fileExtension(filename) !== ".apk") return false;
-    return head[0] === 0x50 && head[1] === 0x4b && head[2] === 0x03 && head[3] === 0x04;
-  }
+  const isZipMagic = head[0] === 0x50 && head[1] === 0x4b && head[2] === 0x03 && head[3] === 0x04;
   const ext = fileExtension(filename);
+  if (platform === "android") {
+    if (ext !== ".apk" && ext !== ".zip") return false;
+    return isZipMagic;
+  }
   if (ext === ".exe") return head[0] === 0x4d && head[1] === 0x5a;
   if (ext === ".msi") {
     return head[0] === 0xd0 && head[1] === 0xcf && head[2] === 0x11 && head[3] === 0xe0;
   }
+  if (ext === ".zip") return isZipMagic;
   return false;
 }

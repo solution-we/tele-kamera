@@ -1,5 +1,5 @@
 // Public read-only release functions. Every query goes through the
-// publishable client, so the database's public SELECT policy (published
+// Publishable client, so the database's public SELECT policy (published
 // rows only) is the single source of truth for what leaves the server.
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
