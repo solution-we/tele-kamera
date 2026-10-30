@@ -18,8 +18,8 @@ export function validateUploadFile(platform: ReleasePlatform, file: File): strin
   if (file.size > MAX_RELEASE_BYTES) return "The file exceeds the 1 GB size limit";
   if (!extensionAllowed(platform, file.name)) {
     return platform === "android"
-      ? "Only .apk files are accepted for Android"
-      : "Only .exe or .msi files are accepted for Windows";
+      ? "Only .apk or .zip files are accepted for Android"
+      : "Only .exe, .msi or .zip files are accepted for Windows";
   }
   return null;
 }

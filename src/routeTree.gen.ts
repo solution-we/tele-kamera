@@ -25,6 +25,7 @@ import { Route as DownloadWindowsRouteImport } from './routes/download.windows'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
 import { Route as AuthenticatedAdminReleasesRouteImport } from './routes/_authenticated/admin.releases'
+import { Route as ApiPublicDownloadBundleRouteImport } from './routes/api/public/download.bundle'
 import { Route as ApiPublicDownloadPlatformReleaseIdRouteImport } from './routes/api/public/download.$platform.$releaseId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -107,6 +108,11 @@ const AuthenticatedAdminReleasesRoute =
     path: '/releases',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const ApiPublicDownloadBundleRoute = ApiPublicDownloadBundleRouteImport.update({
+  id: '/api/public/download/bundle',
+  path: '/api/public/download/bundle',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicDownloadPlatformReleaseIdRoute =
   ApiPublicDownloadPlatformReleaseIdRouteImport.update({
     id: '/api/public/download/$platform/$releaseId',
@@ -130,6 +136,7 @@ export interface FileRoutesByFullPath {
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/releases': typeof AuthenticatedAdminReleasesRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/api/public/download/bundle': typeof ApiPublicDownloadBundleRoute
   '/api/public/download/$platform/$releaseId': typeof ApiPublicDownloadPlatformReleaseIdRoute
 }
 export interface FileRoutesByTo {
@@ -147,6 +154,7 @@ export interface FileRoutesByTo {
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/releases': typeof AuthenticatedAdminReleasesRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/api/public/download/bundle': typeof ApiPublicDownloadBundleRoute
   '/api/public/download/$platform/$releaseId': typeof ApiPublicDownloadPlatformReleaseIdRoute
 }
 export interface FileRoutesById {
@@ -167,6 +175,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin/releases': typeof AuthenticatedAdminReleasesRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/api/public/download/bundle': typeof ApiPublicDownloadBundleRoute
   '/api/public/download/$platform/$releaseId': typeof ApiPublicDownloadPlatformReleaseIdRoute
 }
 export interface FileRouteTypes {
@@ -187,6 +196,7 @@ export interface FileRouteTypes {
     | '/admin/audit'
     | '/admin/releases'
     | '/admin/'
+    | '/api/public/download/bundle'
     | '/api/public/download/$platform/$releaseId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -204,6 +214,7 @@ export interface FileRouteTypes {
     | '/admin/audit'
     | '/admin/releases'
     | '/admin'
+    | '/api/public/download/bundle'
     | '/api/public/download/$platform/$releaseId'
   id:
     | '__root__'
@@ -223,6 +234,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/audit'
     | '/_authenticated/admin/releases'
     | '/_authenticated/admin/'
+    | '/api/public/download/bundle'
     | '/api/public/download/$platform/$releaseId'
   fileRoutesById: FileRoutesById
 }
@@ -239,6 +251,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   DownloadAndroidRoute: typeof DownloadAndroidRoute
   DownloadWindowsRoute: typeof DownloadWindowsRoute
+  ApiPublicDownloadBundleRoute: typeof ApiPublicDownloadBundleRoute
   ApiPublicDownloadPlatformReleaseIdRoute: typeof ApiPublicDownloadPlatformReleaseIdRoute
 }
 
@@ -356,6 +369,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminReleasesRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/api/public/download/bundle': {
+      id: '/api/public/download/bundle'
+      path: '/api/public/download/bundle'
+      fullPath: '/api/public/download/bundle'
+      preLoaderRoute: typeof ApiPublicDownloadBundleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/download/$platform/$releaseId': {
       id: '/api/public/download/$platform/$releaseId'
       path: '/api/public/download/$platform/$releaseId'
@@ -405,6 +425,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   DownloadAndroidRoute: DownloadAndroidRoute,
   DownloadWindowsRoute: DownloadWindowsRoute,
+  ApiPublicDownloadBundleRoute: ApiPublicDownloadBundleRoute,
   ApiPublicDownloadPlatformReleaseIdRoute:
     ApiPublicDownloadPlatformReleaseIdRoute,
 }
