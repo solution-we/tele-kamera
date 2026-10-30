@@ -296,7 +296,9 @@ async function inspectUpload(
   const storageKey = uploadKeySchema(ctx.userId).parse(rawStorageKey);
   const parsedFilename = filenameSchema.parse(rawFilename);
   if (!extensionAllowed(platform, parsedFilename)) {
-    return { error: `Only ${platform === "android" ? ".apk" : ".exe or .msi"} files are accepted for ${platform}` };
+    return {
+      error: `Only ${platform === "android" ? ".apk or .zip" : ".exe, .msi or .zip"} files are accepted for ${platform}`,
+    };
   }
   let stats: ObjectStats;
   try {
