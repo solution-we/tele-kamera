@@ -24,7 +24,7 @@ import {
   versionSchema,
   type ReleasePlatform,
 } from "@/lib/release-validation";
-import { pickLatestStable, type ReleaseSummary } from "@/lib/release-selection";
+import { pickLatestPublished, type ReleaseSummary } from "@/lib/release-selection";
 
 type AdminContext = { supabase: SupabaseClient<Database>; userId: string };
 
@@ -241,8 +241,8 @@ export const getAdminOverview = createServerFn({ method: "GET" })
       released_at: r.released_at,
       created_at: r.created_at,
     });
-    const latestAndroid = pickLatestStable(releases.filter((r) => r.platform === "android").map(toSummary));
-    const latestWindows = pickLatestStable(releases.filter((r) => r.platform === "windows").map(toSummary));
+    const latestAndroid = pickLatestPublished(releases.filter((r) => r.platform === "android").map(toSummary));
+    const latestWindows = pickLatestPublished(releases.filter((r) => r.platform === "windows").map(toSummary));
     const { data: activity, error: activityError } = await ctx.supabase
       .from("admin_audit_log")
       .select("id, actor, action, target, created_at")

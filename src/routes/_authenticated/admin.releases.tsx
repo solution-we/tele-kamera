@@ -230,8 +230,8 @@ function NewReleaseDialog({ onClose }: { onClose: () => void }) {
           <div>
             <label className={labelCls} htmlFor="platform">Platform</label>
             <select id="platform" value={platform} onChange={(e) => setPlatform(platformSchema.parse(e.target.value))} className={inputCls}>
-              <option value="android">Android (.apk)</option>
-              <option value="windows">Windows (.exe / .msi)</option>
+              <option value="android">Android (.apk / .zip)</option>
+              <option value="windows">Windows (.exe / .msi / .zip)</option>
             </select>
           </div>
           <div>
@@ -268,7 +268,7 @@ function NewReleaseDialog({ onClose }: { onClose: () => void }) {
           <input
             id="file"
             type="file"
-            accept={platform === "android" ? ".apk" : ".exe,.msi"}
+            accept={platform === "android" ? ".apk,.zip" : ".exe,.msi,.zip"}
             onChange={onFileChange}
             className="block w-full text-sm text-muted-foreground file:mr-3 file:rounded-lg file:border-0 file:bg-secondary file:px-3 file:py-2 file:text-sm file:font-medium file:text-foreground"
           />
@@ -415,7 +415,7 @@ function ReplaceFileDialog({ release, onClose }: { release: AdminRelease; onClos
       <form onSubmit={submit} className="space-y-3">
         <input
           type="file"
-          accept={release.platform === "android" ? ".apk" : ".exe,.msi"}
+          accept={release.platform === "android" ? ".apk,.zip" : ".exe,.msi,.zip"}
           onChange={(e) => setFile(e.target.files?.[0] ?? null)}
           className="block w-full text-sm text-muted-foreground file:mr-3 file:rounded-lg file:border-0 file:bg-secondary file:px-3 file:py-2 file:text-sm file:font-medium file:text-foreground"
         />
