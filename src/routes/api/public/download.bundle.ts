@@ -28,6 +28,7 @@ function rateLimited(ip: string): boolean {
 interface BundleRelease {
   platform: string;
   version: string;
+  status: string;
   released_at: string | null;
   storage_key: string;
   original_filename: string;
@@ -91,7 +92,7 @@ function createZipStream(sources: ZipSource[], readme: string): ReadableStream<U
     }
   };
 
-  const zip = new Zip({ level: 0 }, (err, data, final) => {
+  const zip = new Zip((err: unknown | null, data: Uint8Array | undefined, final: boolean) => {
     if (err) {
       failure = err;
       finished = true;

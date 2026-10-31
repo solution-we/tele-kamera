@@ -1,16 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 
-import { getLatestStableReleases } from "@/lib/releases.functions";
+import { getLatestPublishedReleases } from "@/lib/releases.functions";
 import { SiteFooter, SiteHeader } from "@/components/site/site-chrome";
 import { formatBytes, formatDate, formatVersion } from "@/components/site/format";
-import heroDevices from "@/assets/hero-devices.jpg";
-import phoneHome from "@/assets/screen-phone-home.jpg";
-import phoneSettings from "@/assets/screen-phone-settings.jpg";
-import windowsApp from "@/assets/screen-windows-app.jpg";
+import heroDevices from "@/assets/hero-devices-hq.jpg";
+import phoneHome from "@/assets/screen-phone-home-hq.jpg";
+import phoneSettings from "@/assets/screen-phone-settings-hq.jpg";
+import windowsApp from "@/assets/screen-windows-app-hq.jpg";
 
 export const Route = createFileRoute("/")({
-  loader: () => getLatestStableReleases(),
+  loader: () => getLatestPublishedReleases(),
   head: () => ({
     meta: [
       { title: "TeleKamera — Your pocket studio" },
@@ -62,7 +62,10 @@ function HomePage() {
                 <a href={`/download/android/${latest.android.id}`} className="glass glass-hover flex items-center gap-3 rounded-xl px-5 py-3">
                   <span className="text-2xl" aria-hidden>🤖</span>
                   <span>
-                    <span className="block text-sm font-semibold">Download for Android</span>
+                    <span className="block text-sm font-semibold">
+                      Download for Android
+                      {latest.android.channel !== "stable" && <ChannelTag channel={latest.android.channel} />}
+                    </span>
                     <span className="block text-xs text-muted-foreground">APK · {formatVersion(latest.android.version)}</span>
                   </span>
                 </a>
@@ -73,12 +76,31 @@ function HomePage() {
                 <a href={`/download/windows/${latest.windows.id}`} className="glass glass-hover flex items-center gap-3 rounded-xl px-5 py-3">
                   <span className="text-2xl" aria-hidden>🪟</span>
                   <span>
-                    <span className="block text-sm font-semibold">Download for Windows</span>
-                    <span className="block text-xs text-muted-foreground">EXE · {formatVersion(latest.windows.version)}</span>
+                    <span className="block text-sm font-semibold">
+                      Download for Windows
+                      {latest.windows.channel !== "stable" && <ChannelTag channel={latest.windows.channel} />}
+                    </span>
+                    <span className="block text-xs text-muted-foreground">
+                      {latest.windows.original_filename.endsWith(".msi")
+                        ? "MSI"
+                        : latest.windows.original_filename.endsWith(".exe")
+                          ? "EXE"
+                          : "ZIP"}{" "}
+                      · {formatVersion(latest.windows.version)}
+                    </span>
                   </span>
                 </a>
               ) : (
                 <DisabledButton platform="Windows" />
+              )}
+              {(latest.android || latest.windows) && (
+                <a href="/api/public/download/bundle" className="glass glass-hover flex items-center gap-3 rounded-xl px-5 py-3">
+                  <span className="text-2xl" aria-hidden>📦</span>
+                  <span>
+                    <span className="block text-sm font-semibold">Download both</span>
+                    <span className="block text-xs text-muted-foreground">Android + Windows · one ZIP</span>
+                  </span>
+                </a>
               )}
             </div>
             <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
@@ -178,6 +200,14 @@ function HomePage() {
       </main>
       <SiteFooter />
     </div>
+  );
+}
+
+function ChannelTag({ channel }: { channel: string }) {
+  return (
+    <span className="ml-2 rounded-md bg-accent px-1.5 py-0.5 align-middle text-[10px] font-medium uppercase tracking-wide text-accent-foreground">
+      {channel === "beta" ? "Beta" : "Pre-release"}
+    </span>
   );
 }
 

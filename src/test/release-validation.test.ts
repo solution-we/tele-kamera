@@ -20,10 +20,13 @@ describe("release upload validation", () => {
 
   it("allows only the platform's real installer extensions", () => {
     expect(extensionAllowed("android", "app-v1.apk")).toBe(true);
+    expect(extensionAllowed("android", "app.zip")).toBe(true);
     expect(extensionAllowed("android", "app.exe")).toBe(false);
     expect(extensionAllowed("windows", "setup.exe")).toBe(true);
     expect(extensionAllowed("windows", "setup.msi")).toBe(true);
+    expect(extensionAllowed("windows", "setup.zip")).toBe(true);
     expect(extensionAllowed("windows", "setup.apk")).toBe(false);
+    expect(extensionAllowed("android", "app.rar")).toBe(false);
   });
 
   it("verifies magic bytes, not just the extension", () => {
@@ -33,13 +36,18 @@ describe("release upload validation", () => {
     const fakeHead = new Uint8Array([0x00, 0x01, 0x02, 0x03]);
 
     expect(checkMagicBytes("android", "app.apk", apkHead)).toBe(true);
+    expect(checkMagicBytes("android", "app.zip", apkHead)).toBe(true);
     expect(checkMagicBytes("android", "app.apk", fakeHead)).toBe(false);
     expect(checkMagicBytes("windows", "setup.exe", exeHead)).toBe(true);
     expect(checkMagicBytes("windows", "setup.msi", msiHead)).toBe(true);
+    expect(checkMagicBytes("windows", "setup.zip", apkHead)).toBe(true);
     expect(checkMagicBytes("windows", "setup.msi", exeHead)).toBe(false);
     expect(checkMagicBytes("windows", "setup.exe", fakeHead)).toBe(false);
+    expect(checkMagicBytes("windows", "setup.zip", fakeHead)).toBe(false);
     // A renamed exe cannot pass as an APK even with APK magic bytes elsewhere.
     expect(checkMagicBytes("windows", "setup.exe", apkHead)).toBe(false);
+    // A renamed exe cannot pass as a zip archive either.
+    expect(checkMagicBytes("android", "app.zip", exeHead)).toBe(false);
   });
 
   it("locks upload keys inside the admin's own upload folder", () => {

@@ -4,6 +4,7 @@ import {
   compareVersions,
   isPubliclyVisible,
   pickLatest,
+  pickLatestPublished,
   pickLatestStable,
   type ReleaseSummary,
 } from "@/lib/release-selection";
@@ -86,5 +87,23 @@ describe("release publication rules", () => {
       release({ id: "higher", version: "1.10.0", released_at: "2026-03-01T00:00:00Z" }),
     ]);
     expect(latest?.id).toBe("higher");
+  });
+
+  it("picks the latest published release for the public pages, any channel", () => {
+    const latest = pickLatestPublished([
+      release({ id: "beta-newest", version: "0.5.0", channel: "beta", released_at: "2026-10-23T00:00:00Z" }),
+      release({ id: "no-stable-but-older", version: "0.4.0", channel: "stable", released_at: "2026-09-01T00:00:00Z" }),
+    ]);
+    expect(latest?.id).toBe("beta-newest");
+  });
+
+  it("never picks draft or archived releases for the public pages", () => {
+    const latest = pickLatestPublished([
+      release({ id: "draft", version: "9.9.9", status: "draft", released_at: "2026-11-01T00:00:00Z" }),
+      release({ id: "archived", version: "9.9.8", status: "archived", released_at: "2026-10-01T00:00:00Z" }),
+      release({ id: "live", version: "0.5.0", channel: "beta", released_at: "2026-10-23T00:00:00Z" }),
+    ]);
+    expect(latest?.id).toBe("live");
+    expect(pickLatestPublished([release({ id: "d", status: "draft" })])).toBeNull();
   });
 });
