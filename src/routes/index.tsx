@@ -4,10 +4,10 @@ import { useServerFn } from "@tanstack/react-start";
 import { getLatestPublishedReleases } from "@/lib/releases.functions";
 import { SiteFooter, SiteHeader } from "@/components/site/site-chrome";
 import { formatBytes, formatDate, formatVersion } from "@/components/site/format";
-import heroDevices from "@/assets/hero-devices.jpg";
-import phoneHome from "@/assets/screen-phone-home.jpg";
-import phoneSettings from "@/assets/screen-phone-settings.jpg";
-import windowsApp from "@/assets/screen-windows-app.jpg";
+import heroDevices from "@/assets/hero-devices-hq.jpg";
+import phoneHome from "@/assets/screen-phone-home-hq.jpg";
+import phoneSettings from "@/assets/screen-phone-settings-hq.jpg";
+import windowsApp from "@/assets/screen-windows-app-hq.jpg";
 
 export const Route = createFileRoute("/")({
   loader: () => getLatestPublishedReleases(),
