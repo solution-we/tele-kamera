@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { SiteFooter, SiteHeader } from "@/components/site/site-chrome";
-import phoneHome from "@/assets/screen-phone-home.jpg";
-import phoneSettings from "@/assets/screen-phone-settings.jpg";
-import windowsApp from "@/assets/screen-windows-app.jpg";
+import phoneHome from "@/assets/screen-phone-home-hq.jpg";
+import phoneSettings from "@/assets/screen-phone-settings-hq.jpg";
+import windowsApp from "@/assets/screen-windows-app-hq.jpg";
 
 export const Route = createFileRoute("/screenshots")({
   head: () => ({
