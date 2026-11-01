@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { listPublicReleases, type PublicRelease } from "@/lib/releases.functions";
 import { SiteFooter, SiteHeader } from "@/components/site/site-chrome";
 import { formatBytes, formatDate, formatVersion } from "@/components/site/format";
+import { AndroidIcon, WindowsIcon, ZipIcon } from "@/components/site/icons";
 
 export const Route = createFileRoute("/downloads")({
   head: () => ({
@@ -39,9 +40,9 @@ function DownloadsPage() {
           <div className="glass mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 rounded-2xl p-5">
             <a
               href="/api/public/download/bundle"
-              className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+              className="flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
             >
-              📦 Download both platforms (ZIP)
+              <ZipIcon className="h-4 w-4 shrink-0" /> Download both platforms (ZIP)
             </a>
             <p className="text-xs text-muted-foreground">
               Bundles the latest Android and Windows releases into a single archive.
@@ -66,9 +67,12 @@ function DownloadsPage() {
 }
 
 function ReleaseGroup({ title, rows }: { title: string; rows: PublicRelease[] }) {
+  const GroupIcon = title === "Android" ? AndroidIcon : WindowsIcon;
   return (
     <section className="mt-10">
-      <h2 className="font-display text-xl font-semibold">{title}</h2>
+      <h2 className="flex items-center gap-2 font-display text-xl font-semibold">
+        <GroupIcon className="h-5 w-5 shrink-0" /> {title}
+      </h2>
       <div className="mt-4 space-y-3">
         {rows.map((r) => (
           <div key={r.id} className="glass rounded-2xl p-5">

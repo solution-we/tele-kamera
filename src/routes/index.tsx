@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
+import { LayoutGrid, RotateCw, Sparkles, Usb, Video, Wifi } from "lucide-react";
 
 import { getLatestPublishedReleases } from "@/lib/releases.functions";
 import { SiteFooter, SiteHeader } from "@/components/site/site-chrome";
 import { formatBytes, formatDate, formatVersion } from "@/components/site/format";
+import { AndroidIcon, CheckIcon, WindowsIcon, ZipIcon } from "@/components/site/icons";
 import heroDevices from "@/assets/hero-devices-hq.jpg";
 import phoneHome from "@/assets/screen-phone-home-hq.jpg";
 import phoneSettings from "@/assets/screen-phone-settings-hq.jpg";
@@ -25,12 +27,12 @@ export const Route = createFileRoute("/")({
 });
 
 const features = [
-  { title: "High quality video", desc: "Up to 1080p · 60 FPS" },
-  { title: "USB connection", desc: "Plug and play" },
-  { title: "Wi-Fi connection", desc: "Pair on local network" },
-  { title: "Rotation & flip", desc: "Adjust your camera view" },
-  { title: "Works with all apps", desc: "Meet, Discord, OBS, etc." },
-  { title: "Simple & clean", desc: "Minimal and easy to use" },
+  { title: "High quality video", desc: "Up to 1080p · 60 FPS", icon: Video },
+  { title: "USB connection", desc: "Plug and play", icon: Usb },
+  { title: "Wi-Fi connection", desc: "Pair on local network", icon: Wifi },
+  { title: "Rotation & flip", desc: "Adjust your camera view", icon: RotateCw },
+  { title: "Works with all apps", desc: "Meet, Discord, OBS, etc.", icon: LayoutGrid },
+  { title: "Simple & clean", desc: "Minimal and easy to use", icon: Sparkles },
 ];
 
 const steps = [
@@ -60,7 +62,7 @@ function HomePage() {
             <div className="mt-8 flex flex-wrap gap-3">
               {latest.android ? (
                 <a href={`/download/android/${latest.android.id}`} className="glass glass-hover flex items-center gap-3 rounded-xl px-5 py-3">
-                  <span className="text-2xl" aria-hidden>🤖</span>
+                  <AndroidIcon className="h-6 w-6 shrink-0" />
                   <span>
                     <span className="block text-sm font-semibold">
                       Download for Android
@@ -74,7 +76,7 @@ function HomePage() {
               )}
               {latest.windows ? (
                 <a href={`/download/windows/${latest.windows.id}`} className="glass glass-hover flex items-center gap-3 rounded-xl px-5 py-3">
-                  <span className="text-2xl" aria-hidden>🪟</span>
+                  <WindowsIcon className="h-6 w-6 shrink-0" />
                   <span>
                     <span className="block text-sm font-semibold">
                       Download for Windows
@@ -95,7 +97,7 @@ function HomePage() {
               )}
               {(latest.android || latest.windows) && (
                 <a href="/api/public/download/bundle" className="glass glass-hover flex items-center gap-3 rounded-xl px-5 py-3">
-                  <span className="text-2xl" aria-hidden>📦</span>
+                  <ZipIcon className="h-6 w-6 shrink-0" />
                   <span>
                     <span className="block text-sm font-semibold">Download both</span>
                     <span className="block text-xs text-muted-foreground">Android + Windows · one ZIP</span>
@@ -104,10 +106,10 @@ function HomePage() {
               )}
             </div>
             <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
-              <li>✓ USB &amp; Wi-Fi</li>
-              <li>✓ High quality video</li>
-              <li>✓ No extra hardware</li>
-              <li>✓ Completely free</li>
+              <li className="flex items-center gap-2"><CheckIcon className="h-4 w-4 shrink-0" /> USB &amp; Wi-Fi</li>
+              <li className="flex items-center gap-2"><CheckIcon className="h-4 w-4 shrink-0" /> High quality video</li>
+              <li className="flex items-center gap-2"><CheckIcon className="h-4 w-4 shrink-0" /> No extra hardware</li>
+              <li className="flex items-center gap-2"><CheckIcon className="h-4 w-4 shrink-0" /> Completely free</li>
             </ul>
           </div>
           <img
@@ -123,8 +125,8 @@ function HomePage() {
           <div className="glass grid grid-cols-2 gap-x-4 gap-y-8 rounded-2xl px-6 py-10 sm:grid-cols-3 lg:grid-cols-6">
             {features.map((f) => (
               <div key={f.title} className="text-center">
-                <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-secondary text-lg" aria-hidden>
-                  ✦
+                <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-secondary text-muted-foreground" aria-hidden>
+                  <f.icon className="h-5 w-5" />
                 </div>
                 <h3 className="text-sm font-semibold">{f.title}</h3>
                 <p className="mt-1 text-xs text-muted-foreground">{f.desc}</p>
@@ -212,8 +214,10 @@ function ChannelTag({ channel }: { channel: string }) {
 }
 
 function DisabledButton({ platform }: { platform: string }) {
+  const Icon = platform === "Android" ? AndroidIcon : WindowsIcon;
   return (
     <span className="glass flex items-center gap-3 rounded-xl px-5 py-3 opacity-50" aria-disabled>
+      <Icon className="h-6 w-6 shrink-0" />
       <span>
         <span className="block text-sm font-semibold">Download for {platform}</span>
         <span className="block text-xs text-muted-foreground">Coming soon</span>
