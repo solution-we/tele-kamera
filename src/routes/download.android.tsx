@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { getLatestPublishedReleases, type LatestReleases } from "@/lib/releases.functions";
 import { SiteFooter, SiteHeader } from "@/components/site/site-chrome";
 import { formatBytes, formatDate, formatVersion } from "@/components/site/format";
+import { AndroidIcon, WindowsIcon } from "@/components/site/icons";
 
 export const Route = createFileRoute("/download/android")({
   loader: () => getLatestPublishedReleases(),
@@ -25,12 +26,14 @@ export const Route = createFileRoute("/download/android")({
 export function PlatformDownload({ platform, latest }: { platform: "android" | "windows"; latest: LatestReleases }) {
   const release = platform === "android" ? latest.android : latest.windows;
   const label = platform === "android" ? "Android" : "Windows";
+  const PlatformIcon = platform === "android" ? AndroidIcon : WindowsIcon;
 
   return (
     <div className="obsidian-sheen flex min-h-screen flex-col">
       <SiteHeader />
       <main className="mx-auto flex w-full max-w-xl flex-1 flex-col items-center justify-center px-4 py-16">
         <div className="glass w-full rounded-2xl p-8 text-center">
+          <PlatformIcon className="mx-auto mb-4 h-10 w-10 text-muted-foreground" />
           <h1 className="font-display text-3xl font-bold">Download for {label}</h1>
           {release ? (
             <>
