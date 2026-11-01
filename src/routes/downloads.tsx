@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { listPublicReleases, type PublicRelease } from "@/lib/releases.functions";
 import { SiteFooter, SiteHeader } from "@/components/site/site-chrome";
 import { formatBytes, formatDate, formatVersion } from "@/components/site/format";
+import { AndroidIcon, WindowsIcon, ZipIcon } from "@/components/site/icons";
 
 export const Route = createFileRoute("/downloads")({
   head: () => ({
@@ -66,9 +67,12 @@ function DownloadsPage() {
 }
 
 function ReleaseGroup({ title, rows }: { title: string; rows: PublicRelease[] }) {
+  const GroupIcon = title === "Android" ? AndroidIcon : WindowsIcon;
   return (
     <section className="mt-10">
-      <h2 className="font-display text-xl font-semibold">{title}</h2>
+      <h2 className="flex items-center gap-2 font-display text-xl font-semibold">
+        <GroupIcon className="h-5 w-5 shrink-0" /> {title}
+      </h2>
       <div className="mt-4 space-y-3">
         {rows.map((r) => (
           <div key={r.id} className="glass rounded-2xl p-5">
