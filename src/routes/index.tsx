@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
+import { LayoutGrid, RotateCw, Sparkles, Usb, Video, Wifi } from "lucide-react";
 
 import { getLatestPublishedReleases } from "@/lib/releases.functions";
 import { SiteFooter, SiteHeader } from "@/components/site/site-chrome";
 import { formatBytes, formatDate, formatVersion } from "@/components/site/format";
+import { AndroidIcon, CheckIcon, WindowsIcon, ZipIcon } from "@/components/site/icons";
 import heroDevices from "@/assets/hero-devices-hq.jpg";
 import phoneHome from "@/assets/screen-phone-home-hq.jpg";
 import phoneSettings from "@/assets/screen-phone-settings-hq.jpg";
@@ -25,12 +27,12 @@ export const Route = createFileRoute("/")({
 });
 
 const features = [
-  { title: "High quality video", desc: "Up to 1080p · 60 FPS" },
-  { title: "USB connection", desc: "Plug and play" },
-  { title: "Wi-Fi connection", desc: "Pair on local network" },
-  { title: "Rotation & flip", desc: "Adjust your camera view" },
-  { title: "Works with all apps", desc: "Meet, Discord, OBS, etc." },
-  { title: "Simple & clean", desc: "Minimal and easy to use" },
+  { title: "High quality video", desc: "Up to 1080p · 60 FPS", icon: Video },
+  { title: "USB connection", desc: "Plug and play", icon: Usb },
+  { title: "Wi-Fi connection", desc: "Pair on local network", icon: Wifi },
+  { title: "Rotation & flip", desc: "Adjust your camera view", icon: RotateCw },
+  { title: "Works with all apps", desc: "Meet, Discord, OBS, etc.", icon: LayoutGrid },
+  { title: "Simple & clean", desc: "Minimal and easy to use", icon: Sparkles },
 ];
 
 const steps = [
