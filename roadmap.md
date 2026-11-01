@@ -9,6 +9,12 @@ Source: `TELEKAMERA — COMPLETE WEBSITE & SECURE RELEASE MANAGEMENT SYSTEM` bri
 - [x] Bootstrap secrets `ADMIN_INITIAL_EMAIL` / `ADMIN_INITIAL_PASSWORD` stored server-side
 - [x] Obsidian Glass design tokens + product mockup assets cropped from reference
 
+## Done (updates)
+- [x] Public site: home, features, how-to-use, screenshots, faq, privacy, terms
+- [x] Public downloads: /downloads archive, per-release download endpoint, combined "Download both" ZIP endpoint (/api/public/download/bundle, streamed)
+- [x] Formats: Android .apk/.zip, Windows .exe/.msi/.zip (magic-byte validated); public pages show latest published release of any channel
+- [x] Product screenshots upscaled and cleaned (4x sharper replacements)
+
 ## In progress
 - [ ] Database schema: releases, user_roles + has_role, admin_security, admin_audit_log, bootstrap_state; storage RLS
 - [ ] Public site: home, features, how-to-use, screenshots, faq, privacy, terms
