@@ -214,8 +214,10 @@ function ChannelTag({ channel }: { channel: string }) {
 }
 
 function DisabledButton({ platform }: { platform: string }) {
+  const Icon = platform === "Android" ? AndroidIcon : WindowsIcon;
   return (
     <span className="glass flex items-center gap-3 rounded-xl px-5 py-3 opacity-50" aria-disabled>
+      <Icon className="h-6 w-6 shrink-0" />
       <span>
         <span className="block text-sm font-semibold">Download for {platform}</span>
         <span className="block text-xs text-muted-foreground">Coming soon</span>
