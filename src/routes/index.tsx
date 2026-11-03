@@ -53,15 +53,15 @@ function HomePage() {
             <span className="inline-block rounded-full border border-border px-3 py-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
               Android + Windows
             </span>
-            <h1 className="mt-5 font-display text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl">
+            <h1 className="mt-5 font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl">
               Your pocket<br />studio.
             </h1>
             <p className="mt-5 max-w-md text-lg text-muted-foreground">
               Turn your Android phone into a webcam for your Windows PC. Simple, fast, and free.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap">
               {latest.android ? (
-                <a href={`/download/android/${latest.android.id}`} className="glass glass-hover flex items-center gap-3 rounded-xl px-5 py-3">
+                <a href={`/api/public/download/android/${latest.android.id}`} download className="glass glass-hover flex w-full items-center justify-center gap-3 rounded-xl px-5 py-3 sm:w-auto sm:justify-start">
                   <AndroidIcon className="h-6 w-6 shrink-0" />
                   <span>
                     <span className="block text-sm font-semibold">
@@ -75,7 +75,7 @@ function HomePage() {
                 <DisabledButton platform="Android" />
               )}
               {latest.windows ? (
-                <a href={`/download/windows/${latest.windows.id}`} className="glass glass-hover flex items-center gap-3 rounded-xl px-5 py-3">
+                <a href={`/api/public/download/windows/${latest.windows.id}`} download className="glass glass-hover flex w-full items-center justify-center gap-3 rounded-xl px-5 py-3 sm:w-auto sm:justify-start">
                   <WindowsIcon className="h-6 w-6 shrink-0" />
                   <span>
                     <span className="block text-sm font-semibold">
@@ -96,7 +96,7 @@ function HomePage() {
                 <DisabledButton platform="Windows" />
               )}
               {(latest.android || latest.windows) && (
-                <a href="/api/public/download/bundle" className="glass glass-hover flex items-center gap-3 rounded-xl px-5 py-3">
+                <a href="/api/public/download/bundle" download className="glass glass-hover flex w-full items-center justify-center gap-3 rounded-xl px-5 py-3 sm:w-auto sm:justify-start">
                   <ZipIcon className="h-6 w-6 shrink-0" />
                   <span>
                     <span className="block text-sm font-semibold">Download both</span>
@@ -105,7 +105,7 @@ function HomePage() {
                 </a>
               )}
             </div>
-            <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
+            <ul className="mt-7 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground sm:justify-start">
               <li className="flex items-center gap-2"><CheckIcon className="h-4 w-4 shrink-0" /> USB &amp; Wi-Fi</li>
               <li className="flex items-center gap-2"><CheckIcon className="h-4 w-4 shrink-0" /> High quality video</li>
               <li className="flex items-center gap-2"><CheckIcon className="h-4 w-4 shrink-0" /> No extra hardware</li>
@@ -179,13 +179,13 @@ function HomePage() {
               label="Latest version"
               title={latest.android ? `Android ${formatVersion(latest.android.version)}` : "Android"}
               sub={latest.android ? `Released on ${formatDate(latest.android.released_at)} · ${formatBytes(latest.android.file_size)}` : "Coming soon"}
-              href={latest.android ? `/download/android/${latest.android.id}` : undefined}
+              href={latest.android ? `/api/public/download/android/${latest.android.id}` : undefined}
             />
             <VersionCard
               label="Latest version"
               title={latest.windows ? `Windows ${formatVersion(latest.windows.version)}` : "Windows"}
               sub={latest.windows ? `Released on ${formatDate(latest.windows.released_at)} · ${formatBytes(latest.windows.file_size)}` : "Coming soon"}
-              href={latest.windows ? `/download/windows/${latest.windows.id}` : undefined}
+              href={latest.windows ? `/api/public/download/windows/${latest.windows.id}` : undefined}
             />
             <div className="glass glass-hover rounded-2xl p-5">
               <div className="flex items-center justify-between">
