@@ -12,4 +12,8 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Deploy targets: Lovable builds (and the sandbox preview) keep the Cloudflare
+  // Worker target. When the repo is built on Vercel (VERCEL=1 is set there),
+  // nitro switches to the Vercel preset so `vite build` emits .vercel/output.
+  nitro: process.env.VERCEL ? { preset: "vercel" } : undefined,
 });
