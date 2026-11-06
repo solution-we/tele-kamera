@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Vercel builds use the nitro "vercel" preset when VERCEL env is set (vite.config.ts); Lovable builds stay on Cloudflare. Why: same repo deploys to both hosts.
+- Download buttons link straight to /api/public/download/<platform>/<id>. Why: there is no page route at /download/<platform>/<id>.
