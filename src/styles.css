@@ -115,3 +115,10 @@
     radial-gradient(ellipse 80% 55% at 50% -10%, oklch(1 0 0 / 6%), transparent 70%),
     var(--color-background);
 }
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

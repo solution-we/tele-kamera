@@ -42,7 +42,6 @@ export function SiteHeader() {
           <Link
             key={item.to}
             to={item.to}
-            activeProps={{ className: "text-foreground" }}
             activeProps={{ className: "bg-accent text-foreground" }}
             className="shrink-0 rounded-full px-3 py-1.5 text-xs text-muted-foreground"
           >
