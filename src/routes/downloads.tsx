@@ -92,8 +92,9 @@ function ReleaseGroup({ title, rows }: { title: string; rows: PublicRelease[] })
                 {r.release_notes && <p className="mt-2 whitespace-pre-line text-sm text-muted-foreground">{r.release_notes}</p>}
               </div>
               <a
-                href={`/download/${r.platform}/${r.id}`}
-                className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+                href={`/api/public/download/${r.platform}/${r.id}`}
+                download
+                className="w-full rounded-lg text-center sm:w-auto bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
               >
                 Download
               </a>

@@ -37,13 +37,14 @@ export function SiteHeader() {
           Download
         </Link>
       </div>
-      <nav className="flex items-center justify-center gap-1 border-t border-border py-2 text-sm md:hidden">
+      <nav className="no-scrollbar flex items-center gap-1 overflow-x-auto whitespace-nowrap border-t border-border px-3 py-2 text-sm md:hidden">
         {nav.map((item) => (
           <Link
             key={item.to}
             to={item.to}
             activeProps={{ className: "text-foreground" }}
-            className="rounded-lg px-2.5 py-1 text-xs text-muted-foreground"
+            activeProps={{ className: "bg-accent text-foreground" }}
+            className="shrink-0 rounded-full px-3 py-1.5 text-xs text-muted-foreground"
           >
             {item.label}
           </Link>
