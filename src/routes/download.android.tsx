@@ -53,8 +53,9 @@ export function PlatformDownload({ platform, latest }: { platform: "android" | "
                 <p className="mt-2 break-all font-mono text-[11px] text-muted-foreground/80">SHA-256: {release.sha256}</p>
               )}
               <a
-                href={`/download/${platform}/${release.id}`}
-                className="mt-6 inline-block rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+                href={`/api/public/download/${platform}/${release.id}`}
+                download
+                className="mt-6 block w-full sm:inline-block sm:w-auto rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
               >
                 Download {fileKind(release.original_filename)}
               </a>
