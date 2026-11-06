@@ -15,6 +15,8 @@ Source: `TELEKAMERA — COMPLETE WEBSITE & SECURE RELEASE MANAGEMENT SYSTEM` bri
 - [x] Formats: Android .apk/.zip, Windows .exe/.msi/.zip (magic-byte validated); public pages show latest published release of any channel
 - [x] Product screenshots upscaled and cleaned (4x sharper replacements)
 
+- [x] Vercel deploy support; fixed broken download links; phone layout polish
+
 ## In progress
 - [ ] Database schema: releases, user_roles + has_role, admin_security, admin_audit_log, bootstrap_state; storage RLS
 - [ ] Public site: home, features, how-to-use, screenshots, faq, privacy, terms
